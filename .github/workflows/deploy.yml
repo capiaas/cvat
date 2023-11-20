@@ -9,8 +9,9 @@ env:
   VERSION: ${{ github.sha }}
 
 jobs:
-  publish_python:
+  build:
     runs-on: ubuntu-latest
+    steps:
     - uses: actions/checkout@v3
     - name: Copy file to capia_deploy
       uses: appleboy/scp-action@v0.1.4
