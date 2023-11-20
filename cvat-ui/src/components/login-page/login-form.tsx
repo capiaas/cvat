@@ -59,31 +59,6 @@ function LoginFormComponent(props: Props): JSX.Element {
         <div className='cvat-login-form-wrapper'>
             <Row justify='space-between' className='cvat-credentials-navigation'>
                 {
-                    credential && (
-                        <Col>
-                            <Icon
-                                component={BackArrowIcon}
-                                onClick={() => {
-                                    setCredential('');
-                                    form.setFieldsValue({ credential: '' });
-                                }}
-                            />
-                        </Col>
-                    )
-                }
-                {
-                    !credential && (
-                        <Row>
-                            <Col className='cvat-credentials-link'>
-                                <Text strong>
-                                    New user?&nbsp;
-                                    <Link to='/auth/register'>Create an account</Link>
-                                </Text>
-                            </Col>
-                        </Row>
-                    )
-                }
-                {
                     renderResetPassword && forgotPasswordLink
                 }
             </Row>

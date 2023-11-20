@@ -1,0 +1,35 @@
+name: Build and deploy CVAT
+run-name: ${{ github.actor }} triggered Build and deploy CVAT
+on:
+  push:
+    branches:
+      - releases/*
+
+env:
+  VERSION: ${{ github.sha }}
+
+jobs:
+  publish_python:
+    runs-on: ubuntu-latest
+    - uses: actions/checkout@v3
+    - name: Copy file to capia_deploy
+      uses: appleboy/scp-action@v0.1.4
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        source: "*"
+        target: mohammad
+    - name: SSH to host and run docker compose build
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          ls -a
+        # script: |
+          # docker-compose -f docker-compose.yml -f docker-compose.dev.yml build
+          # docker-compose up -d
