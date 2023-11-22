@@ -18,7 +18,8 @@ jobs:
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.KEY }}
+        password: ${{ secrets.PASSWORD }}
+        # key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         source: "*"
         target: ../../cvat_new
@@ -27,7 +28,8 @@ jobs:
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.KEY }}
+        password: ${{ secrets.PASSWORD }}
+        # key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         script: |
           ls -a
