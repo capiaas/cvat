@@ -18,18 +18,16 @@ jobs:
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        # key: ${{ secrets.KEY }}
+        key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         source: "*"
-        target: ../../cvat_new
+        target: cvat
     - name: SSH to host and run docker compose build
       uses: appleboy/ssh-action@v1.0.0
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        # key: ${{ secrets.KEY }}
+        key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         script: |
           ls -a
