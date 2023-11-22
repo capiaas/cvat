@@ -31,7 +31,5 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          ls -a
-        # script: |
-          # docker-compose -f docker-compose.yml -f docker-compose.dev.yml build
-          # docker-compose up -d
+          docker-compose -f docker-compose.yml -f docker-compose.dev.yml build
+          docker-compose up -d
