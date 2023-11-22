@@ -21,7 +21,7 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         source: "*"
-        target: mohammad
+        target: ../../cvat_new
     - name: SSH to host and run docker compose build
       uses: appleboy/ssh-action@v1.0.0
       with:
