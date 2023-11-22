@@ -20,6 +20,7 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
+        timeout: "120s"
         source: "*"
         target: cvat
     - name: SSH to host and run docker compose build
