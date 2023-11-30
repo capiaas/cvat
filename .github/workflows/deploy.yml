@@ -12,24 +12,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Copy file to capia_deploy
-      uses: appleboy/scp-action@v0.1.4
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.KEY }}
-        port: ${{ secrets.PORT }}
-        timeout: "120s"
-        source: "*"
-        target: cvat
-    - name: SSH to host and run docker compose build
-      uses: appleboy/ssh-action@v1.0.0
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.KEY }}
-        port: ${{ secrets.PORT }}
-        script: |
-          docker compose -f docker-compose.yml -f docker-compose.dev.yml build
-          docker compose up -d
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Set Up SSH
+      run: |
+        mkdir -p ~/.ssh/
+        echo "${{ secrets.CVAT_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
+        chmod 644 ~/.ssh/known_hosts
+        HOST=${{ secrets.HOST }}
+        USERNAME=${{ secrets.USERNAME }}
+
+    - name: Create Directory on Server
+      run: |
+        ssh -i ~/.ssh/id_rsa $USERNAME@$HOST 'mkdir -p test'
