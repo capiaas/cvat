@@ -28,4 +28,4 @@ jobs:
 
     - name: Create Directory on Server
       run: |
-        ssh -i ~/.ssh/id_rsa $USERNAME@$HOST 'mkdir -p test'
+        ssh -i ~/.ssh/id_rsa $USERNAME@$HOST 'ls'
