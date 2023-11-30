@@ -25,6 +25,7 @@ jobs:
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.CVAT_PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
         script: |
           mkdir -p test_cvat'
