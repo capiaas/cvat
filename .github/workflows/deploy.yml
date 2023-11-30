@@ -20,6 +20,16 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.CVAT_PRIVATE_KEY }}
 
+    - name: Copy cvat to volumes
+      uses: appleboy/scp-action@v0.1.4
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.CVAT_PRIVATE_KEY }}
+        port: ${{ secrets.PORT }}
+        source: "*"
+        target: ../volumes/cvat_new
+
     - name: Executing remote ssh commands
       uses: appleboy/ssh-action@v1.0.0
       with:
@@ -28,4 +38,5 @@ jobs:
         key: ${{ secrets.CVAT_PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          mkdir -p test_cvat
+          cd ../volumes/cvat_new
+          ls
