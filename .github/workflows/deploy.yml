@@ -14,18 +14,12 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-    - name: Set Up SSH
-      run: |
-        mkdir -p ~/.ssh/
-        echo "${{ secrets.CVAT_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan github.com >> ~/.ssh/known_hosts
-        chmod 644 ~/.ssh/known_hosts
-        HOST=${{ secrets.HOST }}
-        USERNAME=${{ secrets.USERNAME }}
-        echo "User: $USERNAME"
-        echo "Host: $HOST"
 
-    - name: Create Directory on Server
+    - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.0
+        with:
+          ssh-private-key: ${{ secrets.CVAT_PRIVATE_KEY }}
+
+    - name: Create Directory
       run: |
-        ssh -i ~/.ssh/id_rsa $USERNAME@$HOST 'ls'
+        ssh -o StrictHostKeyChecking=no "${{ secrets.USERNAME }}"@"${{ secrets.HOST }}" 'mkdir -p test_cvat'
