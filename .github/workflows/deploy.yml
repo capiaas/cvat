@@ -22,4 +22,4 @@ jobs:
 
       - name: Create Directory
         run: |
-          ssh -o StrictHostKeyChecking=no "${{ secrets.USERNAME }}"@"${{ secrets.HOST }}" 'mkdir -p test_cvat'
+          ssh -o StrictHostKeyChecking=no "${{ secrets.USERNAME }}"@"${{ secrets.HOST }}" 'mkdir -p test_cvat' -p 2202
