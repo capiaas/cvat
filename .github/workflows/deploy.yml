@@ -23,6 +23,8 @@ jobs:
         chmod 644 ~/.ssh/known_hosts
         HOST=${{ secrets.HOST }}
         USERNAME=${{ secrets.USERNAME }}
+        echo "User: $USERNAME"
+        echo "Host: $HOST"
 
     - name: Create Directory on Server
       run: |
