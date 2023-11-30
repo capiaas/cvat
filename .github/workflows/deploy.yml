@@ -12,14 +12,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+    - name: Checkout
+      uses: actions/checkout@v3
 
-      - name: Setup SSH
-        uses: webfactory/ssh-agent@v0.5.0
-        with:
-          ssh-private-key: ${{ secrets.CVAT_PRIVATE_KEY }}
+    - name: Setup SSH
+      uses: webfactory/ssh-agent@v0.5.0
+      with:
+        ssh-private-key: ${{ secrets.CVAT_PRIVATE_KEY }}
 
-      - name: Create Directory
-        run: |
-          ssh -o StrictHostKeyChecking=no "${{ secrets.USERNAME }}"@"${{ secrets.HOST }}" 'mkdir -p test_cvat' -p 2202
+    - name: Executing remote ssh commands
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        port: ${{ secrets.PORT }}
+        script: |
+          mkdir -p test_cvat'
