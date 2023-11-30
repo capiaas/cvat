@@ -28,4 +28,4 @@ jobs:
         key: ${{ secrets.CVAT_PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          mkdir -p test_cvat'
+          mkdir -p test_cvat
