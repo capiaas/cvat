@@ -40,4 +40,6 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           cd ../../volumes/cvat_new
-          ls
+          export CVAT_HOST=${{ secrets.CVAT_HOST }}
+          docker compose -f docker-compose.yml -f docker-compose.dev.yml build
+          docker compose up -d
