@@ -1,9 +1,7 @@
 #!/bin/bash
 
 echo "Backup script for cvat triggered at $(date)"
-# Get the current date in the format YYYY-MM-DD
-current_date=$(date +%Y%m%d)
-backup_dir="/volumes/cvat_new/backup/$current_date"
+backup_dir="cvat_backup"
 mkdir -p "$backup_dir"
 
 docker compose stop
