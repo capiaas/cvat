@@ -1,0 +1,166 @@
+metadata:
+  name: akvaplan-niva-yolov5
+  namespace: cvat
+  annotations:
+    name: Akvaplan v2
+    type: detector
+    framework: pytorch
+    spec: |
+      [
+        {
+            "id": 0,
+            "name": "anemone"
+        },
+        {
+            "id": 1,
+            "name": "Massiv rund, tjukk skalformet, poros bulkeformet_svamp"
+        },
+        {
+            "id": 2,
+            "name": "fisk"
+        },
+        {
+            "id": 3,
+            "name": "blomkalkorall"
+        },
+        {
+            "id": 4,
+            "name": "vortesvamp"
+        },
+        {
+            "id": 5,
+            "name": "sjostjerne"
+        },
+        {
+            "id": 6,
+            "name": "finger_svamp"
+        },
+        {
+            "id": 7,
+            "name": "risengrynkorall"
+        },
+        {
+            "id": 8,
+            "name": "Tynn vifteformet, traktformet_svamp"
+        },
+        {
+            "id": 9,
+            "name": "steinbit"
+        },
+        {
+            "id": 10,
+            "name": "flyndre"
+        },
+        {
+            "id": 11,
+            "name": "krabbe"
+        },
+        {
+            "id": 12,
+            "name": "liten piperenser"
+        },
+        {
+            "id": 13,
+            "name": "sjofaer"
+        },
+        {
+            "id": 14,
+            "name": "skorpe"
+        },
+        {
+            "id": 15,
+            "name": "mysterie"
+        },
+        {
+            "id": 16,
+            "name": "sjopolse"
+        },
+        {
+            "id": 17,
+            "name": "krepsdyr"
+        },
+        {
+            "id": 18,
+            "name": "stor piperenser"
+        },
+        {
+            "id": 19,
+            "name": "tare"
+        },
+        {
+            "id": 20,
+            "name": "krakebolle"
+        },
+        {
+            "id": 21,
+            "name": "snegle"
+        },
+        {
+            "id": 22,
+            "name": "soppel"
+        },
+        {
+            "id": 23,
+            "name": "fjarsjolilje"
+        },
+        {
+            "id": 24,
+            "name": "grandiflora"
+        },
+        {
+            "id": 25,
+            "name": "bambuskorall"
+        },
+        {
+            "id": 26,
+            "name": "Skate"
+        },
+        {
+            "id": 27,
+            "name": "Sjøtre"
+        },
+        {
+            "id": 28,
+            "name": "stylocordyla"
+        },
+        {
+            "id": 29,
+            "name": "sjobusk"
+        },
+        {
+            "id": 30,
+            "name": "reirskjell"
+        }
+      ]
+spec:
+  description: YOLO v5 via pytorch hub
+  runtime: 'python:3.6'
+  handler: main:handler
+  eventTimeout: 30s
+  build:
+    image: cvat.ultralytics.yolov5
+    baseImage: ultralytics/yolov5:latest-cpu
+
+    directives:
+      preCopy:
+        - kind: USER
+          value: root
+        - kind: RUN
+          value: apt update && apt install --no-install-recommends -y libglib2.0-0
+        - kind: WORKDIR
+          value: /opt/nuclio
+
+  triggers:
+    myHttpTrigger:
+      maxWorkers: 2
+      kind: 'http'
+      workerAvailabilityTimeoutMilliseconds: 10000
+      attributes:
+        maxRequestBodySize: 33554432 # 32MB
+
+  platform:
+    attributes:
+      restartPolicy:
+        name: always
+        maximumRetryCount: 3
+      mountMode: volume
